@@ -2,10 +2,13 @@ package org.example;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.Scanner;
 
 public class Main {
+    public static final String SAVE_FILE_NAME = "basket.bin";
+
     public static final Product[] prod = {
             new Product("Гречка", 80),
             new Product("Молоко", 55),
@@ -15,17 +18,19 @@ public class Main {
             new Product("Хлеб", 20)
     };
 
-    public static void main(String[] args) throws FileNotFoundException, ParseException {
+    public static void main(String[] args) throws IOException, ParseException, ClassNotFoundException {
         Scanner scanner = new Scanner(System.in);
         Basket basket = new Basket(prod);
-        File f = new File("basket.txt");
+
+        File f = new File("basket.bin");
+
         int productIndex;
         int productsAmount;
 
         if (f.exists()) {
             System.out.println("Загрузить корзину? Нажмите <ENTER> ");
             if (scanner.nextLine().equals("")) {
-                basket = Basket.loadFromTxtFile(f);
+                basket = Basket.loadFromBinFile(f);
             }
         }
 
@@ -49,7 +54,7 @@ public class Main {
                     }
 
                     basket.addToCart(productIndex - 1, productsAmount);
-                    basket.saveTxt(f);
+                    basket.saveBin(f);
                 } catch (NumberFormatException n) {
                     System.out.println("Введены некорректные символы: " + n);
 //                    continue;
@@ -64,4 +69,7 @@ public class Main {
         scanner.close();
         basket.printCart();
     }
+
 }
+
+

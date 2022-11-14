@@ -1,6 +1,8 @@
 package org.example;
 
-public class Product {
+import java.io.Serializable;
+
+public class Product implements Serializable {
     private final String name;
     private final int price;
     private int inBasket = 0;
